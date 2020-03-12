@@ -7,9 +7,9 @@ namespace IdentityServerHelper
 {
     internal static class SecretGenerator
     {
-        private static readonly int SIZE = 64;
+        private const int SIZE = 64;
 
-        private static readonly char[] chars;
+        private static readonly char[] _chars;
 
         static SecretGenerator()
         {
@@ -18,7 +18,7 @@ namespace IdentityServerHelper
             integers = integers.Concat(Enumerable.Range('A', 26));
             integers = integers.Concat(Enumerable.Range('a', 26));
 
-            chars = integers.Select(i => (char)i).ToArray();
+            _chars = integers.Select(i => (char)i).ToArray();
         }
 
         public static string Generate()
@@ -40,9 +40,9 @@ namespace IdentityServerHelper
             for (int i = 0; i < SIZE; i++)
             {
                 var rnd = BitConverter.ToUInt32(data, i * 4);
-                var idx = rnd % chars.Length;
+                var idx = rnd % _chars.Length;
 
-                builder.Append(chars[idx]);
+                builder.Append(_chars[idx]);
             }
 
             return builder.ToString();
